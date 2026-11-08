@@ -1,0 +1,58 @@
+body,.card,input,select,textarea,.opt,.modal-box{transition:background-color .35s,color .35s,border-color .35s}
+button{transition:transform .14s,filter .2s,background-color .2s,box-shadow .2s}
+button:active{transform:scale(.95)}
+.btn-primary:hover{filter:brightness(1.1);transform:translateY(-1px);box-shadow:0 4px 14px color-mix(in srgb,var(--accent) 35%,transparent)}
+.btn-ghost:hover,.btn-danger:hover{transform:translateY(-1px)}
+.opt{transition:all .2s cubic-bezier(.3,1.4,.5,1)}.opt:hover{transform:translateY(-1px)}.opt:active{transform:scale(.94)}
+.swatch{transition:transform .18s}.swatch:hover{transform:scale(1.25)}
+.collapse{display:grid;grid-template-rows:0fr;opacity:0;transition:grid-template-rows var(--dur) var(--ease),opacity .26s}
+.collapse.open{grid-template-rows:1fr;opacity:1}
+.collapse>.inner{overflow:hidden;min-height:0}
+@keyframes rise{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+@keyframes pop{from{opacity:0;transform:scale(.6)}to{opacity:1;transform:scale(1)}}
+.card.enter{animation:rise .42s cubic-bezier(.2,.8,.2,1) both;animation-delay:calc(var(--i,0)*50ms)}
+.card.leaving{transition:opacity .25s,transform .25s;opacity:0;transform:translateY(8px) scale(.98)}
+.card.removing{transition:opacity .3s,transform .3s;opacity:0;transform:translateX(28px) scale(.97)}
+.section{animation:rise .38s cubic-bezier(.2,.8,.2,1) both}
+.tag-chip,.tag-chip-view{animation:pop .22s cubic-bezier(.3,1.5,.5,1)}
+.mk{display:inline-block;animation:pop .3s both}
+.modal{opacity:0;transition:opacity .2s}.modal.show{opacity:1}
+.modal-box{transform:scale(.92) translateY(8px);transition:transform .25s cubic-bezier(.3,1.4,.5,1)}
+.modal.show .modal-box{transform:none}
+.toast{animation:rise .3s both}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important;animation-delay:0s!important}}
+@keyframes analyticsButtonIn{
+  from{opacity:0;transform:translateY(12px) scale(.88)}
+  to{opacity:1;transform:translateY(0) scale(1)}
+}
+.detail-trigger{animation:analyticsButtonIn .5s cubic-bezier(.22,.8,.2,1) both}
+@keyframes overviewExit{
+  from{opacity:1;transform:translateX(0) scale(1)}
+  to{opacity:0;transform:translateX(-18px) scale(.97)}
+}
+
+@keyframes detailMorph{
+  0%{transform:translateY(0) scale(1);opacity:1}
+  35%{transform:translateY(-3px) scale(1.08)}
+  70%{transform:translateY(0) scale(1.18);opacity:.95}
+  100%{transform:translateY(0) scale(1.35);opacity:0}
+}
+
+.analysis-panel.overview-exit{
+  animation:overviewExit .32s cubic-bezier(.22,.8,.2,1) both;
+  pointer-events:none;
+}
+
+.detail-trigger.detail-morph{
+  animation:detailMorph .32s cubic-bezier(.22,.8,.2,1) both;
+  pointer-events:none;
+}
+
+@keyframes detailPanelIn{
+  from{opacity:0;transform:translateX(24px) scale(.97)}
+  to{opacity:1;transform:none}
+}
+
+.journal-shell.analysis-detail .analysis-panel.open{
+  animation:detailPanelIn .42s cubic-bezier(.22,.8,.2,1) both;
+}

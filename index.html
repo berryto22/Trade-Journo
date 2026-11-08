@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta
+  name="viewport"
+  content="width=device-width, initial-scale=1, viewport-fit=cover"
+>
+<title>Trade Journal</title>
+
+<script>
+  try {
+    const savedTheme = localStorage.getItem('journal_theme') || 'clarity';
+    document.documentElement.setAttribute('data-theme', savedTheme === 'system' ? 'sandstone' : savedTheme);
+  } catch {}
+</script>
+
+<link rel="stylesheet" href="css/tokens.css?v=themes-gallery-5">
+<link rel="stylesheet" href="css/components.css?v=alerts-46">
+<link rel="stylesheet" href="css/animations.css">
+</head>
+
+<body class="session-pending">
+
+<div class="session-loader" id="sessionLoader" role="status" aria-label="Loading"></div>
+
+<section class="auth-screen" id="authScreen" aria-label="Trade Journal account">
+  <div class="auth-brand"><span class="auth-brand-mark">T</span><span>Trade Journal</span></div>
+  <div class="auth-layout">
+    <div class="auth-copy">
+      <span class="auth-eyebrow">YOUR EDGE, IN FOCUS</span>
+      <h1>Trade with<br><em>intention.</em></h1>
+      <p>A calmer place to prepare, reflect, and build consistency in every trade.</p>
+      <div class="auth-proof"><span class="auth-proof-line"></span><span>Your journal, always in sync.</span></div>
+    </div>
+    <div class="auth-glass">
+      <div class="auth-glint"></div>
+      <div class="auth-card-head"><span class="auth-kicker" id="authKicker">WELCOME BACK</span><h2 id="authTitle">Sign in</h2><p id="authSubtitle">Pick up where your trading journey left off.</p></div>
+      <form id="authForm" class="auth-form">
+        <label class="auth-name-field hidden" id="authNameField">Full name<input id="authName" type="text" autocomplete="name" placeholder="Your name"></label>
+        <label id="authEmailLabel">Email address<input id="authEmail" type="text" inputmode="email" autocomplete="email" placeholder="Username or email" required></label>
+        <div class="auth-field"><label for="authPassword">Password</label><div class="password-input-wrap"><input id="authPassword" type="password" autocomplete="current-password" placeholder="At least 8 characters" minlength="8" required><button class="password-eye" type="button" data-password-target="authPassword" aria-label="Show password" aria-pressed="false" title="Show password"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m3 3 18 18M10.6 5.2A10.7 10.7 0 0 1 12 5c6.4 0 10 7 10 7a15.4 15.4 0 0 1-3.1 3.8M6.2 6.2C3.5 8 2 12 2 12s3.6 7 10 7a10.8 10.8 0 0 0 4.1-.8"/><path d="M9.9 9.9a3 3 0 0 0 4.2 4.2"/></svg></button></div></div>
+        <label class="auth-remember"><input id="rememberMe" type="checkbox"><span>Stay signed in for 3 months</span></label>
+        <button class="auth-forgot" id="authForgot" type="button">Forgot password?</button>
+        <p class="auth-message" id="authMessage" role="status" aria-live="polite"></p>
+        <button class="auth-submit" id="authSubmit" type="submit">Sign in <span>→</span></button>
+      </form>
+      <div class="auth-divider"><span>SECURE & PRIVATE</span></div>
+      <p class="auth-switch" id="authSwitchText">New to Trade Journal? <button type="button" id="authSwitch">Create account</button></p>
+    </div>
+  </div>
+  <div class="auth-footer"><span>Designed for clearer decisions.</span><span>Private by design · Securely synced</span></div>
+</section>
+
+<div class="wrap hidden" id="appShell">
+
+  <aside class="date-history" id="dateHistory" aria-label="Trading dates">
+    <button class="date-history-toggle" id="dateHistoryToggle" type="button" aria-expanded="false" aria-controls="dateHistoryContent" title="Open date history">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="5" width="16" height="14" rx="1.5"/><path d="M9 5v14"/></svg>
+    </button>
+    <div class="date-history-content" id="dateHistoryContent" hidden>
+      <div class="date-history-month-head"><button type="button" id="dateHistoryPrev" aria-label="Previous month">‹</button><span id="dateHistoryMonth"></span><button type="button" id="dateHistoryNext" aria-label="Next month">›</button></div>
+      <div class="date-history-list" id="dateHistoryList"></div>
+    </div>
+  </aside>
+
+  <!-- =========================
+       TOP BAR
+       ========================= -->
+
+  <div class="topbar">
+
+    <div>
+      <h1>Trade Journal</h1>
+
+      <div class="sub">
+        Pre-trade checklist + entry log
+      </div>
+    </div>
+
+    <div class="topbar-actions">
+
+      <button class="account-trigger" id="btnAccount" type="button" aria-label="Open your account">
+        <span class="account-avatar" id="accountAvatar">N</span><span class="account-trigger-name" id="accountTriggerName">Account</span>
+      </button>
+
+      <!-- Analytics -->
+      <button
+        class="analysis-trigger"
+        id="btnAnalysis"
+        type="button"
+        title="Open trading analytics"
+      >
+        <span class="analysis-trigger-icon">◒</span>
+        Analytics
+      </button>
+
+      <button
+        class="analysis-trigger phase-lab-trigger"
+        id="btnPhaseLab"
+        type="button"
+        title="Open Market Phase Lab"
+      >
+        <span class="analysis-trigger-icon">📈</span>
+        Phase Lab
+      </button>
+
+      <!-- Existing theme picker -->
+      <div
+        class="themes"
+        id="themeRow"
+      ></div>
+      <button class="theme-more" id="themeMore" type="button" aria-label="Browse more themes" title="More themes">+</button>
+      <button class="settings-trigger" id="btnSettings" type="button" aria-label="Open settings" title="Settings">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.5 20.227 7.25v9.5L12 21.5l-8.227-4.75v-9.5L12 2.5Z"/><circle cx="12" cy="12" r="2.5"/></svg>
+      </button>
+
+    </div>
+
+  </div>
+
+
+  <!-- =========================
+       JOURNAL + ANALYTICS
+       ========================= -->
+
+  <div
+    class="journal-shell"
+    id="journalShell"
+  >
+
+    <!-- =====================
+         MAIN JOURNAL
+         ===================== -->
+
+    <main class="journal-main">
+
+      <!-- New Entry -->
+      <button
+        class="btn-primary"
+        id="btnNew"
+        type="button"
+      >
+        + New Entry
+      </button>
+
+
+      <!-- =====================
+           TRADE FORM
+           ===================== -->
+
+      <div
+        class="card hidden"
+        id="formCard"
+      >
+
+        <div id="sections"></div>
+
+        <div id="featureSlot"></div>
+
+
+        <!-- Form actions -->
+        <div class="footerbar">
+
+          <button
+            class="btn-ghost"
+            id="btnCancel"
+            type="button"
+          >
+            <span>Cancel</span>
+          </button>
+
+          <button
+            class="btn-primary"
+            id="btnSave"
+            type="button"
+          >
+            <span>Save Entry</span>
+          </button>
+
+        </div>
+
+      </div>
+
+
+      <!-- =====================
+           SAVED ENTRIES
+           ===================== -->
+
+      <div id="entries"></div>
+
+
+      <!-- Empty state -->
+      <div
+        id="emptyMsg"
+        class="empty hidden"
+      >
+        No entries yet. Log one before your next trade.
+      </div>
+
+    </main>
+
+
+    <!-- =========================
+         ANALYTICS PANEL
+         ========================= -->
+
+    <aside
+      class="analysis-panel"
+      id="analysisPanel"
+      aria-label="Trading analytics"
+    >
+      <!--
+        analysis.js renders the dashboard
+        contents here dynamically.
+      -->
+    </aside>
+
+  </div>
+
+</div>
+
+<section class="phase-lab hidden" id="phaseLab" aria-labelledby="phaseLabTitle" aria-modal="true" role="dialog">
+  <div class="phase-lab-card">
+    <header class="phase-lab-head">
+      <div><span class="analysis-kicker">MARKET CONTEXT</span><h2 id="phaseLabTitle">Market Phase Lab</h2><p>Phase classification based on price history and the rules from your Python app.</p></div>
+      <button class="analysis-close" id="phaseLabClose" type="button" aria-label="Close Market Phase Lab">×</button>
+    </header>
+    <form class="phase-lab-controls" id="phaseLabForm">
+      <label>Instrument<select id="phaseLabSymbol"><option value="GC=F">Gold futures</option><option value="GLD">Gold ETF</option><option value="SI=F">Silver futures</option><option value="CL=F">Crude oil</option><option value="^GSPC">S&amp;P 500</option><option value="SPY">S&amp;P 500 ETF</option><option value="QQQ">Nasdaq 100 ETF</option><option value="^NSEI">Nifty 50</option><option value="^NSEBANK">Bank Nifty</option><option value="EURUSD=X">EUR/USD</option><option value="BTC-USD">Bitcoin</option><option value="DEMO">Demo data</option></select></label>
+      <label>Timeframe<select id="phaseLabTimeframe"><option value="1d">D1</option><option value="1wk">W1</option><option value="1h">H1</option></select></label>
+      <button class="btn-primary" type="submit">Analyse</button>
+    </form>
+    <p class="phase-lab-status" id="phaseLabStatus" role="status" aria-live="polite">Choose an instrument and analyse it.</p>
+    <div class="phase-lab-content" id="phaseLabContent"></div>
+    <p class="phase-lab-disclaimer">Educational context only. This browser view ports the phase rules and indicators; the Python walk-forward ML forecast still requires a server-side endpoint.</p>
+  </div>
+</section>
+
+<div class="account-backdrop hidden" id="accountBackdrop"></div>
+<section class="account-panel hidden" id="accountPanel" aria-labelledby="accountTitle" aria-modal="true" role="dialog">
+  <div class="account-panel-head"><div><span class="auth-kicker">YOUR SPACE</span><h2 id="accountTitle">Account settings</h2></div><button type="button" class="account-close" id="accountClose" aria-label="Close account settings">×</button></div>
+  <form id="profileForm" class="profile-form">
+    <div class="profile-photo-row"><div class="profile-photo" id="profilePhoto">N</div><div><strong>Your profile photo</strong><label class="photo-upload">Upload photo<input id="profilePhotoInput" type="file" accept="image/png,image/jpeg,image/webp" hidden></label><small>PNG, JPG, or WebP · 2 MB max</small></div></div>
+    <label>Username<input id="profileUsername" type="text" autocomplete="username" readonly aria-describedby="profileUsernameHint"><small id="profileUsernameHint">Your username is the part of your email before @.</small></label>
+    <label>Full name<input id="profileName" type="text" autocomplete="name" maxlength="80" placeholder="Your name"></label>
+    <label>Email address<input id="profileEmail" type="email" autocomplete="email" required></label>
+    <label>Phone number <span class="optional-label">OPTIONAL</span><input id="profilePhone" type="tel" autocomplete="tel" maxlength="30" placeholder="Add a phone number"></label>
+    <p class="account-message" id="profileMessage" role="status" aria-live="polite"></p>
+    <button class="account-save" type="submit">Save profile</button>
+  </form>
+  <form id="passwordForm" class="password-form">
+    <h3>Change password</h3>
+    <div class="password-field"><label for="profilePassword">New password</label><div class="password-input-wrap"><input id="profilePassword" type="password" autocomplete="new-password" minlength="8" placeholder="At least 8 characters" required><button class="password-eye" type="button" data-password-target="profilePassword" aria-label="Show password" aria-pressed="false" title="Show password"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m3 3 18 18M10.6 5.2A10.7 10.7 0 0 1 12 5c6.4 0 10 7 10 7a15.4 15.4 0 0 1-3.1 3.8M6.2 6.2C3.5 8 2 12 2 12s3.6 7 10 7a10.8 10.8 0 0 0 4.1-.8"/><path d="M9.9 9.9a3 3 0 0 0 4.2 4.2"/></svg></button></div></div>
+    <button class="password-save" type="submit">Update password</button>
+  </form>
+  <button class="signout-button" id="btnSignOut" type="button">Sign out</button>
+</section>
+
+<section class="app-settings-page hidden" id="appSettingsPage" aria-labelledby="settingsPageTitle">
+  <header class="app-settings-header">
+    <button class="settings-back" id="settingsBack" type="button"><span aria-hidden="true">←</span> Journal</button>
+    <h2 id="settingsPageTitle">Settings</h2>
+  </header>
+  <div class="app-settings-layout">
+    <nav class="settings-tabs" role="tablist" aria-label="Settings sections">
+      <button class="settings-tab active" id="settingsAlertsTab" type="button" role="tab" aria-selected="true" aria-controls="settingsAlertsPanel"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18 9a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9ZM10 21h4"/></svg><span>Alerts</span></button>
+    </nav>
+    <div class="settings-tab-content">
+      <section class="settings-tab-panel" id="settingsAlertsPanel" role="tabpanel" aria-labelledby="settingsAlertsTab">
+        <div class="settings-panel-heading">
+          <div class="settings-heading-copy"><span class="auth-kicker">NOTIFICATIONS</span><h3 id="notificationTitle">Trading alerts</h3></div>
+          <div class="notification-header-actions"><button class="notification-enable" id="notificationEnable" type="button">Enable on this device</button><button class="notification-test" id="notificationTest" type="button">Send test</button><button class="notification-disable" id="notificationDisable" type="button" hidden>Turn off this device</button></div>
+        </div>
+        <section class="notification-settings" aria-labelledby="notificationTitle">
+          <div class="notification-options" id="notificationOptions">
+            <div class="alert-preferences-grid">
+              <section class="alert-card ntfy-alert" aria-labelledby="ntfyTitle">
+                <div class="ntfy-alert-heading"><div><strong id="ntfyTitle">ntfy notifications</strong><small>Send these alerts to the ntfy app on any device.</small></div><label class="ntfy-toggle" title="Enable ntfy notifications"><input id="ntfyEnabled" type="checkbox" aria-label="Enable ntfy notifications"><span></span></label></div>
+                <div class="ntfy-topic-row"><input id="ntfyTopic" type="text" inputmode="text" autocomplete="off" autocapitalize="off" spellcheck="false" maxlength="64" pattern="[A-Za-z0-9_-]{1,64}" placeholder="Topic name" aria-label="ntfy topic name"><button class="notification-save ntfy-topic-save" id="ntfyTopicSave" type="button">Save</button></div>
+              </section>
+              <section class="alert-card weekly-alert">
+                <div class="alert-card-heading"><label><input id="weeklyReminder" type="checkbox" checked><strong>Weekly focus</strong></label><input id="weeklyReminderTime" type="time" value="08:00" aria-label="Weekly reminder time"></div>
+                <div class="weekday-picker" id="weeklyDays" aria-label="Days for weekly focus reminder"></div>
+                <small>Device timezone: <span id="weeklyTimezone"></span></small>
+              </section>
+            </div>
+            <section class="session-alert-section alert-card" aria-labelledby="sessionAlertTitle">
+              <div class="session-alert-heading">
+                <div><h4 class="session-alert-title" id="sessionAlertTitle">Session alerts</h4></div>
+                <div class="session-timezone-picker">
+                  <label for="sessionTimezoneMode">Time zone</label>
+                  <select id="sessionTimezoneMode" aria-label="Session alert time zone">
+                    <option value="device">Device time zone</option>
+                    <option value="custom">Custom time zone</option>
+                  </select>
+                </div>
+              </div>
+              <div class="session-alert-list" id="sessionAlertList"></div>
+            </section>
+            <div class="session-manual-send">
+              <label for="sessionManualSelect">Send a session alert now</label>
+              <div><select id="sessionManualSelect" aria-label="Choose a session for a manual alert"><option value="sydney">Sydney</option><option value="tokyo">Tokyo</option><option value="london">London</option><option value="newYork">New York</option></select><button id="sessionManualSend" type="button">Send now</button></div>
+            </div>
+          </div>
+          <button class="notification-save" id="notificationSave" type="button" hidden>Save alert settings</button>
+          <p class="notification-status" id="notificationStatus" role="status" aria-live="polite"></p>
+        </section>
+      </section>
+    </div>
+  </div>
+</section>
+
+<div class="sticky-note-layer" id="stickyNoteLayer" hidden aria-label="Sticky notes"></div>
+<div class="sticky-dock" id="stickyDock" hidden>
+  <button class="sticky-clip" id="stickyClip" type="button" aria-label="Open sticky notes" aria-expanded="false" title="Sticky notes">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m21.44 11.05-9.19 9.19a6 6 0 0 1-8.49-8.49l9.19-9.19a4 4 0 0 1 5.66 5.66l-9.2 9.19a2 2 0 0 1-2.82-2.83l8.48-8.48"/></svg>
+  </button>
+  <button class="sticky-plus" id="stickyAdd" type="button" aria-label="Create a note" title="New note">+</button>
+</div>
+
+
+<!-- =========================
+     APPLICATION
+     ========================= -->
+
+<script
+  src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"
+></script>
+<script
+  type="module"
+  src="js/main.js?v=account-load-fix-3"
+></script>
+
+</body>
+</html>

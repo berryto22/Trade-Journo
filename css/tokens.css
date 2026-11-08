@@ -1,0 +1,26 @@
+/* All look-and-feel knobs live here. Themes only override these variables. */
+:root{
+  --bg:#f6f7f9;--card:#fff;--text:#16181d;--sub:#6b7280;--line:#e8e9ec;--accent:#2563eb;--accent-text:#fff;
+  --good:#16a34a;--bad:#dc2626;--warn:#d97706;--purple:#7c3aed;--teal:#0d9488;
+  --r:12px;--r-sm:8px;--gap:12px;--dur:.32s;--ease:cubic-bezier(.4,0,.2,1);--font:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme]){--bg:#0f1115;--card:#181b21;--text:#eaecef;--sub:#8b93a1;--line:#262a33;--accent:#3b82f6;--accent-text:#0f1115}}
+[data-theme="light"]{--bg:#f6f7f9;--card:#fff;--text:#16181d;--sub:#6b7280;--line:#e8e9ec;--accent:#2563eb;--accent-text:#fff}
+[data-theme="dark"]{--bg:#0f1115;--card:#181b21;--text:#eaecef;--sub:#8b93a1;--line:#262a33;--accent:#3b82f6;--accent-text:#0f1115}
+[data-theme="slate"]{--bg:#1a1d24;--card:#242832;--text:#e5e7eb;--sub:#94a0b3;--line:#333947;--accent:#818cf8;--accent-text:#1a1d24}
+[data-theme="ocean"]{--bg:#f0f9f9;--card:#fff;--text:#0f2b2b;--sub:#4b6b6b;--line:#d3e8e8;--accent:#0d9488;--accent-text:#fff}
+[data-theme="sunset"]{--bg:#1f1512;--card:#2b1e19;--text:#fbe9e0;--sub:#c9a89a;--line:#43302a;--accent:#f97316;--accent-text:#1f1512}
+[data-theme="clarity"]{--bg:#f0f4f6;--card:rgba(255,255,255,.84);--text:#17232e;--sub:#718496;--line:#dce5eb;--accent:#203749;--accent-text:#fff}
+[data-theme="sandstone"]{--bg:#f4f0e8;--card:#fffdf8;--text:#302b25;--sub:#82776a;--line:#e5dccf;--accent:#9b704d;--accent-text:#fff}
+[data-theme="lavender"]{--bg:#f3f0fa;--card:#fffdfd;--text:#29243a;--sub:#7f7892;--line:#e5def2;--accent:#7961b1;--accent-text:#fff}
+[data-theme="rose"]{--bg:#fff1f2;--card:#fffafa;--text:#3c2229;--sub:#92727b;--line:#f1dbe0;--accent:#c35b76;--accent-text:#fff}
+[data-theme="arctic"]{--bg:#edf6fb;--card:#fcfeff;--text:#142c3a;--sub:#678394;--line:#d7e8f0;--accent:#2586aa;--accent-text:#fff}
+[data-theme="forest"]{--bg:#111d19;--card:#192923;--text:#e5f2ea;--sub:#9aafa2;--line:#30463b;--accent:#65b989;--accent-text:#10221a}
+[data-theme="midnight"]{--bg:#0d1525;--card:#151f33;--text:#e7eefb;--sub:#8b9ab4;--line:#29364c;--accent:#60a5fa;--accent-text:#0d1525}
+[data-theme="graphite"]{--bg:#181a1d;--card:#22252a;--text:#eff1f4;--sub:#9ba3ae;--line:#343941;--accent:#b7c36a;--accent-text:#181a1d}
+[data-theme="celadon"]{--bg:#eff5f0;--card:#fbfffc;--text:#1e3227;--sub:#71887a;--line:#dbe8df;--accent:#4e8d68;--accent-text:#fff}
+[data-theme="orchid"]{--bg:#f8f0fb;--card:#fffcff;--text:#34243b;--sub:#897493;--line:#ebdeef;--accent:#a45ab4;--accent-text:#fff}
+[data-theme="citrus"]{--bg:#f5f6e9;--card:#fffef5;--text:#2c321b;--sub:#7d8361;--line:#e5e8d2;--accent:#87962e;--accent-text:#fff}
+[data-theme="cobalt"]{--bg:#101a31;--card:#192849;--text:#edf3ff;--sub:#9dacce;--line:#304365;--accent:#6a8cff;--accent-text:#111b32}
+[data-theme="mocha"]{--bg:#211a17;--card:#30251f;--text:#f4e8de;--sub:#c0a695;--line:#49372d;--accent:#d19a69;--accent-text:#211a17}
+[data-theme="cherry"]{--bg:#24131b;--card:#321d28;--text:#faeaf1;--sub:#c4a1b0;--line:#4b2b3b;--accent:#f06c9b;--accent-text:#24131b}

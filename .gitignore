@@ -1,0 +1,28 @@
+
+# Dependencies
+node_modules/
+
+# Environment and secrets
+.env
+.env.*
+!.env.example
+
+# Build output
+dist/
+build/
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+
+# Supabase temporary files
+supabase/.temp/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log

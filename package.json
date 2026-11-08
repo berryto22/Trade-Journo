@@ -1,0 +1,8 @@
+{
+  "scripts": {
+    "package:site": "node scripts/package-site.mjs"
+  },
+  "devDependencies": {
+    "supabase": "^2.119.0"
+  }
+}
